@@ -1,14 +1,17 @@
 /* TODO: 
   initial styling - DONE
   states - DONE
-  markdown
+  markdown - DONE
   better styling
   responsive
   test
 */
 
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {createUseStyles} from 'react-jss'
+import marked from 'marked'
+import DOMPurify from 'dompurify'
+import initialText from './placeholderText'
 
 const useStyles = createUseStyles({
     container: {
@@ -29,23 +32,37 @@ const useStyles = createUseStyles({
         display: 'block',
         width: '100%',
         height: '50%',
-        margin: '0'
+        margin: '0',
+        backgroundColor: '#ffffff'
     },
     markdownArea: {
         extend: 'textArea',
     },
     previewArea: {
         extend: 'textArea',
+        overflow: 'scroll'
     }
 })
 
 const App = () => {
-    const [editor, setEditor] = useState('')
+    const [editor, setEditor] = useState(initialText)
     const [preview, setPreview] = useState('')
 
+    // initialize preview
+    useEffect(() => {
+        // sanitize
+        const clean = DOMPurify.sanitize(editor)
+        // render
+        setPreview(marked(clean))
+    },[])
+
     const handleEditorText = (evt) => {
-        setEditor(evt.target.value)
-        setPreview(evt.target.value.toUpperCase())
+        const input = evt.target.value
+        setEditor(input)
+        // sanitize
+        const cleanInput = DOMPurify.sanitize(input)
+        // render
+        setPreview(marked(cleanInput))
     }
     
     const styles = useStyles()
@@ -53,7 +70,10 @@ const App = () => {
         <div className={styles.container}>
             <div className={styles.content}>
                 <textarea value={editor} onChange={handleEditorText} className={styles.markdownArea}/>
-                <textarea value={preview} readOnly className={styles.previewArea}/>
+                {/* already sanitized */}
+                <div className={styles.previewArea} dangerouslySetInnerHTML={{
+                    __html: preview
+                }} />
             </div>
         </div>
     )
