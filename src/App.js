@@ -3,6 +3,8 @@
   states - DONE
   markdown - DONE
   better styling
+    window title bars for editor and preview
+    button to make full screen
   responsive
   test
 */
@@ -23,15 +25,15 @@ const useStyles = createUseStyles({
     },
     content: {
         position: 'absolute',
-        height: '100%',
-        width: '80%',
-        left: '10%',
-        right: '10%',
+        height: '80%',
+        width: '100%',
+        top: '10%',
+        display: 'flex',
+        flexFlow: 'row'
     },
     textArea: {
-        display: 'block',
-        width: '100%',
-        height: '50%',
+        width: '50%',
+        height: '100%',
         margin: '0',
         backgroundColor: '#ffffff'
     },
