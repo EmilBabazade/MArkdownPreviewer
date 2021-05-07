@@ -19,6 +19,7 @@ import {createUseStyles} from 'react-jss'
 import marked from 'marked'
 import DOMPurify from 'dompurify'
 import initialText from './placeholderText'
+import 'jss-plugin-global'
 
 const containerBackground = '#87b5b5'
 const paneHeaderBackground = '#4aa3a3' 
@@ -28,6 +29,11 @@ const textContainerHeight = 95
 const ANIMATION_DURATION_SECONDS = 1
 
 const useStyles = createUseStyles({
+    '@global': {
+        body: {
+            overflowX: 'hidden'
+        }
+    },
     container: {
         width: '100%',
         height: '100%',
@@ -93,6 +99,12 @@ const useStyles = createUseStyles({
     leftArrow: {
         extend: 'arrow',
         transform: 'rotate(135deg)'
+    },
+    hiddenArrow: {
+        display: 'none'
+    },
+    hiddenPane: {
+        width: '0%'
     }
 })
 
@@ -122,11 +134,11 @@ const App = () => {
 
     //make fullscreen on buttonpress
     const styles = useStyles()
-    const [editorButtonJssStyle, setEditorButtonStyle] = useState(styles.rightArrow)
-    const [previewButtonJssStyle, setPreviewButtonStyle] = useState(styles.leftArrow)
+    
+    const [editorButtonStyle, setEditorButtonStyle] = useState(styles.rightArrow)
+    const [previewButtonStyle, setPreviewButtonStyle] = useState(styles.leftArrow)
 
     let editorStyle = {}
-    // let editorButtonJssStyle = styles.rightArrow
     let previewStyle = {}
 
     if(fullScreen.editor && !fullScreen.preview) {
@@ -134,7 +146,7 @@ const App = () => {
             width: '100%'
         }
         previewStyle = {
-            display: 'none'
+            width: '0%'
         }
     }
 
@@ -143,7 +155,7 @@ const App = () => {
             width: '100%'
         }
         editorStyle = {
-            display: 'none'
+            width: '0%'
         }
     }
     
@@ -151,10 +163,12 @@ const App = () => {
         if(!fullScreen.editor) {
             setFullScreen({editor: true, preview: false})
             setEditorButtonStyle(styles.leftArrow)
+            setPreviewButtonStyle(styles.hiddenArrow)
         }
         else {
             setFullScreen({editor: false, preview: false})
             setEditorButtonStyle(styles.rightArrow)
+            setPreviewButtonStyle(styles.leftArrow)
         }
     }
 
@@ -162,10 +176,12 @@ const App = () => {
         if(!fullScreen.preview) {
             setFullScreen({editor: false, preview: true})
             setPreviewButtonStyle(styles.rightArrow)
+            setEditorButtonStyle(styles.hiddenArrow)
         }
         else {
             setFullScreen({editor: false, preview:false})
             setPreviewButtonStyle(styles.leftArrow)
+            setEditorButtonStyle(styles.rightArrow)
         }
     }
     
@@ -175,14 +191,14 @@ const App = () => {
                 <div className={styles.pane} style={editorStyle}>
                     <div className={styles.paneHeader}>
                         <p>Editor</p>
-                        <i className={editorButtonJssStyle} onClick={handleEditorFullScreen}></i>
+                        <i className={editorButtonStyle} onClick={handleEditorFullScreen}></i>
                     </div>
                     <textarea value={editor} onChange={handleEditorText} className={styles.markdownArea}/>
                 </div>
                 {/* already sanitized */}
                 <div className={styles.pane} style={previewStyle}>
                     <div className={styles.paneHeader}>
-                        <i className={previewButtonJssStyle} onClick={handlePreviewerFullScreen}></i>
+                        <i className={previewButtonStyle} onClick={handlePreviewerFullScreen}></i>
                         <p>Previewer</p>
                     </div>
                     <div className={styles.previewArea} dangerouslySetInnerHTML={{
