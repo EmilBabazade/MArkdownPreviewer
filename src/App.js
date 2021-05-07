@@ -1,4 +1,13 @@
-import React from 'react'
+/* TODO: 
+  initial styling - DONE
+  states - DONE
+  markdown
+  better styling
+  responsive
+  test
+*/
+
+import React, {useState} from 'react'
 import {createUseStyles} from 'react-jss'
 
 const useStyles = createUseStyles({
@@ -31,13 +40,20 @@ const useStyles = createUseStyles({
 })
 
 const App = () => {
-    const styles = useStyles()
+    const [editor, setEditor] = useState('')
+    const [preview, setPreview] = useState('')
 
+    const handleEditorText = (evt) => {
+        setEditor(evt.target.value)
+        setPreview(evt.target.value.toUpperCase())
+    }
+    
+    const styles = useStyles()
     return (
         <div className={styles.container}>
             <div className={styles.content}>
-                <textarea className={styles.markdownArea}/>
-                <textarea className={styles.previewArea}/>
+                <textarea value={editor} onChange={handleEditorText} className={styles.markdownArea}/>
+                <textarea value={preview} readOnly className={styles.previewArea}/>
             </div>
         </div>
     )
