@@ -5,10 +5,9 @@
   better styling
     window title bars for editor and preview - DONE
     button to make full screen - DONE
-    pane header font
+    pane header font - DONE
     animations for width change
     shadows
-  extract into components
   stack panes vertically for mobile
   responsive
   arrow images for buttons - DONE
@@ -26,6 +25,7 @@ const paneHeaderBackground = '#4aa3a3'
 const textContainerBackground = '#c0d8d8'
 const textContainerHeight = 95
 // const paneHeaderHeight = 100 - textContainerHeight
+const ANIMATION_DURATION_SECONDS = 1
 
 const useStyles = createUseStyles({
     container: {
@@ -47,7 +47,8 @@ const useStyles = createUseStyles({
         width: '50%',
         height: '100%',
         margin: '0',
-        backgroundColor: '#ffffff'
+        backgroundColor: '#ffffff',
+        transition: `width ${ANIMATION_DURATION_SECONDS}s`
     },
     textContainer: {
         height: `${textContainerHeight}%`,
@@ -73,7 +74,8 @@ const useStyles = createUseStyles({
         alignContent: 'center',
         '& *': {
             margin: 0,
-            padding: 0
+            padding: 0,
+            fontFamily: 'Electrolize, sans-serif'
         }
     },
     arrow: {
