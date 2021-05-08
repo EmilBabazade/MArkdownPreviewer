@@ -9,9 +9,8 @@
     animations for width change - DONE
     borders - DONE
     shadows - DONE
-  stack panes vertically for mobile
-  responsive
-  arrow images for buttons - DONE
+    arrow images for buttons - DONE
+    stack panes vertically for mobile - DONE
   tab title
   logo
   test
@@ -28,7 +27,6 @@ const containerBackground = '#87b5b5'
 const paneHeaderBackground = '#4aa3a3' 
 const textContainerBackground = '#c0d8d8'
 const textContainerHeight = 95
-// const paneHeaderHeight = 100 - textContainerHeight
 const ANIMATION_DURATION_SECONDS = 1
 const BORDER_COLOR = '#000000'
 
@@ -51,7 +49,14 @@ const useStyles = createUseStyles({
         width: '100%',
         top: '10%',
         display: 'flex',
-        flexFlow: 'row'
+        flexFlow: 'row',
+
+        // stack panes vertically on mobile and make it fullscreen
+        '@media screen and (max-width: 650px)': {
+            flexFlow: 'column',
+            height: '100%',
+            top: 0
+        }
     },
     pane: {
         width: '50%',
@@ -61,6 +66,13 @@ const useStyles = createUseStyles({
         transition: `width ${ANIMATION_DURATION_SECONDS}s`,
         border: `solid 1px ${BORDER_COLOR}`,
         boxShadow: '2px 2px 5px black',
+
+        // stack panes vertically on mobile and make it fullscreen
+        '@media screen and (max-width: 650px)': {
+            width: '100%',
+            height: '50%',
+            transition: 'none' // don't need width animations on mobile, since it will be full screen
+        }
     },
     textContainer: {
         height: `${textContainerHeight}%`,
@@ -101,7 +113,12 @@ const useStyles = createUseStyles({
         borderWidth: '0 3px 3px 0',
         display: 'inline-block',
         padding: '7px',
-        cursor: 'pointer'
+        cursor: 'pointer',
+
+        // get rid of fullscreen functionality on mobile
+        '@media screen and (max-width: 650px)': {
+            display: 'none'
+        }
     },
     rightArrow: {
         extend: 'arrow',
@@ -152,6 +169,7 @@ const App = () => {
     let editorStyle = {}
     let previewStyle = {}
 
+    // editor fullscreen preview hide
     if(fullScreen.editor && !fullScreen.preview) {
         editorStyle = {
             width: '100%'
@@ -161,6 +179,7 @@ const App = () => {
         }
     }
 
+    // preview fullscreen editor hide
     if(fullScreen.preview && !fullScreen.editor) {
         previewStyle = {
             width: '100%'
@@ -170,6 +189,8 @@ const App = () => {
         }
     }
     
+    // change fullscreen state for above to work
+    // change arrows
     const handleEditorFullScreen = () => {
         if(!fullScreen.editor) {
             setFullScreen({editor: true, preview: false})
