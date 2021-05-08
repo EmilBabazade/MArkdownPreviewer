@@ -11,9 +11,9 @@
     shadows - DONE
     arrow images for buttons - DONE
     stack panes vertically for mobile - DONE
-  tab title
-  logo
-  test
+  tab title - DONE
+  logo - DONE
+  test - DONE
 */
 
 import React, {useState, useEffect} from 'react'
