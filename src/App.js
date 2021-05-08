@@ -6,11 +6,14 @@
     window title bars for editor and preview - DONE
     button to make full screen - DONE
     pane header font - DONE
-    animations for width change
+    animations for width change - DONE
+    borders - DONE
     shadows
   stack panes vertically for mobile
   responsive
   arrow images for buttons - DONE
+  tab title
+  logo
   test
 */
 
@@ -27,6 +30,7 @@ const textContainerBackground = '#c0d8d8'
 const textContainerHeight = 95
 // const paneHeaderHeight = 100 - textContainerHeight
 const ANIMATION_DURATION_SECONDS = 1
+const BORDER_COLOR = '#000000'
 
 const useStyles = createUseStyles({
     '@global': {
@@ -54,7 +58,8 @@ const useStyles = createUseStyles({
         height: '100%',
         margin: '0',
         backgroundColor: '#ffffff',
-        transition: `width ${ANIMATION_DURATION_SECONDS}s`
+        transition: `width ${ANIMATION_DURATION_SECONDS}s`,
+        border: `solid 1px ${BORDER_COLOR}`,
     },
     textContainer: {
         height: `${textContainerHeight}%`,
@@ -64,6 +69,9 @@ const useStyles = createUseStyles({
     },
     markdownArea: {
         extend: 'textContainer',
+        resize: 'none',
+        outline: 'none',
+        border: 'none'
     },
     previewArea: {
         extend: 'textContainer',
@@ -78,6 +86,7 @@ const useStyles = createUseStyles({
         flexFlow: 'row',
         justifyContent: 'space-between',
         alignContent: 'center',
+        borderBottom: `solid 1px ${BORDER_COLOR}`,
         '& *': {
             margin: 0,
             padding: 0,
