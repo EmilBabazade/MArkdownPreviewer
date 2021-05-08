@@ -8,7 +8,7 @@
     pane header font - DONE
     animations for width change - DONE
     borders - DONE
-    shadows
+    shadows - DONE
   stack panes vertically for mobile
   responsive
   arrow images for buttons - DONE
@@ -60,6 +60,7 @@ const useStyles = createUseStyles({
         backgroundColor: '#ffffff',
         transition: `width ${ANIMATION_DURATION_SECONDS}s`,
         border: `solid 1px ${BORDER_COLOR}`,
+        boxShadow: '2px 2px 5px black',
     },
     textContainer: {
         height: `${textContainerHeight}%`,
@@ -87,6 +88,7 @@ const useStyles = createUseStyles({
         justifyContent: 'space-between',
         alignContent: 'center',
         borderBottom: `solid 1px ${BORDER_COLOR}`,
+        boxShadow: '-2px -2px 5px black',
         '& *': {
             margin: 0,
             padding: 0,
